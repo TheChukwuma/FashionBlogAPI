@@ -25,8 +25,8 @@ import java.util.Objects;
 public class Comment {
 
     @Id
-    String id;
-    String comment;
+    private String id;
+    private String comment;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
