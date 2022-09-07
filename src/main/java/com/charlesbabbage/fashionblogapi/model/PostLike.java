@@ -1,33 +1,32 @@
 package com.charlesbabbage.fashionblogapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
 
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
+
 
 @Entity
-
-public class Post {
+public class PostLike {
 
     @Id
     private String id;
-    private String title;
-    private String description;
-    private String image;
-    private String slug;
+
+    private Boolean isLiked;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -40,34 +39,26 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post post;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "post")
-    private  List<PostLike> likes = new ArrayList<>();
-
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "comment_id", referencedColumnName = "id")
+    private Comment comment;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Post post = (Post) o;
-        return id != null && Objects.equals(id, post.id);
+        PostLike like = (PostLike) o;
+        return id != null && Objects.equals(id, like.id);
     }
 
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }
