@@ -1,14 +1,16 @@
 package com.charlesbabbage.fashionblogapi.serviceImpl;
 
 import com.charlesbabbage.fashionblogapi.dto.PostDTO;
-import com.charlesbabbage.fashionblogapi.exception.ResourceNotFoundException;
 import com.charlesbabbage.fashionblogapi.model.Post;
 import com.charlesbabbage.fashionblogapi.model.User;
+import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
 import com.charlesbabbage.fashionblogapi.repository.PostRepository;
 import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.PostService;
+import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
 import com.charlesbabbage.fashionblogapi.utils.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -20,8 +22,10 @@ public class PostServiceImpl implements PostService {
     UserRepository userRepo;
     PostRepository postRepo;
 
+    ResponseUtil responseUtil;
+
     @Override
-    public Post uploadPost(PostDTO postDTO) {
+    public ResponseEntity<APIResponse> uploadPost(PostDTO postDTO) {
         Post post = new Post();
         User user = userRepo.findById(postDTO.getUser_id()).get();
         String id = UUID.getUniqueId();
@@ -31,7 +35,7 @@ public class PostServiceImpl implements PostService {
         post.setDescription(postDTO.getDescription());
         post.setSlug(makeSlug(post.getTitle(),id));
         post.setUser(user);
-        return postRepo.save(post);
+        return responseUtil.Okay(postRepo.save(post));
     }
 
     @Override
@@ -41,7 +45,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post getPost(String id){
-        return postRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id", id));
+    public ResponseEntity<APIResponse> getPost(String id){
+        if (postRepo.findById(id).isEmpty()){
+            return responseUtil.NotFound("Post does not exist");
+        } else {
+            return  responseUtil.Okay(postRepo.findById(id).get());
+        }
+    }
+
+    @Override
+    public ResponseEntity<APIResponse> deletePost(String id) {
+        if (postRepo.findById(id).isEmpty()){
+            return responseUtil.NotFound("Post does not exist");
+        } else {
+            postRepo.deleteById(id);
+            return responseUtil.Deleted();
+        }
     }
 }

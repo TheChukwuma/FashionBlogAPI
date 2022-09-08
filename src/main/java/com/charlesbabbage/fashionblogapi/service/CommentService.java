@@ -1,15 +1,16 @@
 package com.charlesbabbage.fashionblogapi.service;
 
 import com.charlesbabbage.fashionblogapi.dto.CommentDTO;
-import com.charlesbabbage.fashionblogapi.model.Comment;
+import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
+import org.springframework.http.ResponseEntity;
 
 public interface CommentService {
 
-    Comment createComment(CommentDTO commentDTO);
+    ResponseEntity<APIResponse> createComment(CommentDTO commentDTO);
 
-    Comment getComment(String id);
+    ResponseEntity<APIResponse> getComment(String id);
 
-    Comment editComment(String message, String id);
+    ResponseEntity<APIResponse> editComment(String message, String id);
 
-    String deleteComment(String id);
+    ResponseEntity<APIResponse> deleteComment(String id);
 }
