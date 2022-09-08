@@ -8,22 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 import static com.charlesbabbage.fashionblogapi.utils.HashPassword.generateStrongPasswordHash;
 
 public class ValidatePassword {
-//    public static void main(String[] args)
-//            throws NoSuchAlgorithmException, InvalidKeySpecException
-//    {
-//        String  originalPassword = "password";
-//
-//        String generatedSecuredPasswordHash
-//                = generateStrongPasswordHash(originalPassword);
-//        System.out.println(generatedSecuredPasswordHash);
-//
-//        boolean matched = validatePassword("password", generatedSecuredPasswordHash);
-//        System.out.println(matched);
-//
-//        matched = validatePassword("password1", generatedSecuredPasswordHash);
-//        System.out.println(matched);
-//    }
-
     public static boolean validatePassword(String originalPassword, String storedPassword)
             throws NoSuchAlgorithmException, InvalidKeySpecException
     {
