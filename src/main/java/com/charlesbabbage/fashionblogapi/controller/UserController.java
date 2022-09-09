@@ -37,8 +37,13 @@ public class UserController {
     @GetMapping("/account/login")
     public ResponseEntity<APIResponse> login(@RequestParam("username") String username, @RequestParam("password") String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
             return userService.login(username, password);
-
     }
+
+    @GetMapping("/account/profile/{id}")
+    public ResponseEntity<APIResponse> getUser(@PathVariable("id") String user_id){
+        return userService.getUser(user_id);
+    }
+
 
     @PostMapping("/posts")
     public ResponseEntity<APIResponse> sendPost(@RequestBody PostDTO postDTO){

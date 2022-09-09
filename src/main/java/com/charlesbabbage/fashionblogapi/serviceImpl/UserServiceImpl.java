@@ -63,6 +63,12 @@ public class UserServiceImpl implements UserService {
         return responseUtil.NotFound(String.format("Incorrect user login combinations"));
     }
 
+    @Override
+    public ResponseEntity<APIResponse> getUser(String user_id) {
+        if(userRepo.findById(user_id).isEmpty()){
+            return responseUtil.NotFound("USER NOT FOUND");
+        }return responseUtil.Okay(userRepo.findById(user_id).get());
+    }
 
 
 }
