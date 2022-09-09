@@ -46,7 +46,7 @@ public class Post {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post")
-    private  List<PostLike> likes = new ArrayList<>();
+    private  List<Like> likes = new ArrayList<>();
 
 
     @Override

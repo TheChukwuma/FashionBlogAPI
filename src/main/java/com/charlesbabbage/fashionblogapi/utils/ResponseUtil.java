@@ -33,7 +33,9 @@ public class ResponseUtil<T> {
     }
 
     public ResponseEntity<APIResponse> AlreadyLiked(){
-        return new ResponseEntity<>(new APIResponse<>("ALREADY LIKED", true, null), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(new APIResponse<>("ALREADY LIKED, SO, NOW UNLIKED", true, null), HttpStatus.CONFLICT);
     }
+
+
 
 }

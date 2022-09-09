@@ -47,12 +47,12 @@ public class CommentServiceImpl implements CommentService {
         return responseUtil.Okay(commentRepo.findById(id).get());  }
 
     @Override
-    public ResponseEntity<APIResponse> editComment(String message, String id) {
+    public ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, String id) {
         if (commentRepo.findById(id).isEmpty()){
             return responseUtil.NotFound("Comment not found");
         }
         Comment comment = commentRepo.findById(id).get();
-        comment.setComment(message);
+        comment.setComment(commentDTO.getComment());
         return responseUtil.Okay(commentRepo.save(comment));
     }
 

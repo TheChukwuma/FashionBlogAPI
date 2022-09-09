@@ -41,7 +41,7 @@ public class Comment {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "comment")
-    private List<PostLike> likes = new ArrayList<>();
+    private List<Like> likes = new ArrayList<>();
 
     @JsonBackReference
     @ManyToOne

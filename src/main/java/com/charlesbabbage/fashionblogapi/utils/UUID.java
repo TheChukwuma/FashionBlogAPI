@@ -11,7 +11,7 @@ import java.util.Random;
 public class UUID {
 
     public static String getUniqueId() {
-        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&";
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(16);
         for (int i = 0; i < 16; i++)

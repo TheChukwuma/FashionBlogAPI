@@ -10,7 +10,7 @@ public interface CommentService {
 
     ResponseEntity<APIResponse> getComment(String id);
 
-    ResponseEntity<APIResponse> editComment(String message, String id);
+    ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, String id);
 
     ResponseEntity<APIResponse> deleteComment(String id);
 }

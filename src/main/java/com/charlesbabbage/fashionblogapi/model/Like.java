@@ -6,10 +6,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,7 +18,8 @@ import java.util.Objects;
 
 
 @Entity
-public class PostLike {
+@Table(name = "likes")
+public class Like {
 
     @Id
     private String id;
@@ -53,7 +51,7 @@ public class PostLike {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PostLike like = (PostLike) o;
+        Like like = (Like) o;
         return id != null && Objects.equals(id, like.id);
     }
 
