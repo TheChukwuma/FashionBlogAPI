@@ -40,8 +40,8 @@ public class Post {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    private Admin admin;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post")

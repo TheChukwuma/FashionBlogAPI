@@ -12,7 +12,7 @@ public interface PostService {
 
     ResponseEntity<APIResponse> getPost(Long id);
 
-    ResponseEntity<APIResponse> deletePost(Long id);
+    ResponseEntity<APIResponse> deletePost(Long id, Long admin_id);
 
     ResponseEntity<APIResponse> searchPost(String keyword);
 }

@@ -1,14 +1,13 @@
 package com.charlesbabbage.fashionblogapi.serviceImpl;
 
 import com.charlesbabbage.fashionblogapi.dto.PostDTO;
+import com.charlesbabbage.fashionblogapi.model.Admin;
 import com.charlesbabbage.fashionblogapi.model.Post;
-import com.charlesbabbage.fashionblogapi.model.User;
 import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
+import com.charlesbabbage.fashionblogapi.repository.AdminRepository;
 import com.charlesbabbage.fashionblogapi.repository.PostRepository;
-import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.PostService;
 import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
-import com.charlesbabbage.fashionblogapi.utils.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.util.Locale;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
-    UserRepository userRepo;
+    AdminRepository adminRepo;
     PostRepository postRepo;
 
     ResponseUtil responseUtil;
@@ -29,13 +28,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public ResponseEntity<APIResponse> uploadPost(PostDTO postDTO) {
         Post post = new Post();
-        User user = userRepo.findById(postDTO.getUser_id()).get();
-
+        Admin admin = adminRepo.findById(postDTO.getAdmin_id()).get();
         post.setTitle(postDTO.getTitle());
         post.setImage(postDTO.getImage());
         post.setDescription(postDTO.getDescription());
-        post.setSlug(makeSlug(post.getTitle(), postDTO.getUser_id()));
-        post.setUser(user);
+        post.setSlug(makeSlug(post.getTitle(), postDTO.getAdmin_id()));
+        post.setAdmin(admin);
         return responseUtil.Okay(postRepo.save(post));
     }
 
@@ -55,7 +53,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> deletePost(Long id) {
+    public ResponseEntity<APIResponse> deletePost(Long id, Long admin_id) {
+        if (adminRepo.findById(admin_id).isEmpty()){
+            return responseUtil.NotAnAdmin();
+        }
         if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {
@@ -67,7 +68,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public ResponseEntity<APIResponse> searchPost(String keyword) {
         List<Post> searchList = new ArrayList<>();
-
         searchList = postRepo.findAllByTitleContainingIgnoreCase(keyword);
         System.out.println(searchList);
         return responseUtil.Okay(searchList);

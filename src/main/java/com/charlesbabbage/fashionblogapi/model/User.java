@@ -43,11 +43,6 @@ public class User {
     private LocalDateTime updatedAt;
 
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user",
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user",

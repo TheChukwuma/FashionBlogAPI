@@ -36,6 +36,10 @@ public class ResponseUtil<T> {
         return new ResponseEntity<>(new APIResponse<>("ALREADY LIKED, SO, NOW UNLIKED", true, null), HttpStatus.CONFLICT);
     }
 
+    public ResponseEntity<APIResponse> NotAnAdmin(){
+        return new ResponseEntity<>(new APIResponse<>("FOR ADMIN ONLY", true, null), HttpStatus.BAD_REQUEST);
+    }
+
 
 
 }

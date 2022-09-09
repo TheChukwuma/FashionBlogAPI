@@ -50,6 +50,11 @@ public class Comment {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    private Admin admin;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

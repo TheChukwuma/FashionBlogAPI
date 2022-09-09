@@ -28,11 +28,10 @@ public class PostController {
         return postService.getPost(id);
     }
 
-    @DeleteMapping("/posts/{id}")
-    public ResponseEntity<APIResponse> deletePost(@PathVariable("id") Long id){
-        return postService.deletePost(id);
+    @DeleteMapping("/posts/{admin_id}/{id}")
+    public ResponseEntity<APIResponse> deletePost(@PathVariable("admin_id")Long admin_id, @PathVariable("id") Long id){
+        return postService.deletePost(id, admin_id);
     }
-
 
     @PostMapping("/posts/likes/{user_id}/{id}")
     public ResponseEntity<APIResponse> likePost(@PathVariable("user_id") Long user_id, @PathVariable("id") Long post_id){

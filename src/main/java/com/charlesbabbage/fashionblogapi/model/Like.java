@@ -40,6 +40,11 @@ public class Like {
 
     @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    private User admin;
+
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 

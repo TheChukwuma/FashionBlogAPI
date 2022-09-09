@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PostLikeDTO {
+public class LikeDTO {
 
     private Boolean isLiked = false;
     private Long user_id;

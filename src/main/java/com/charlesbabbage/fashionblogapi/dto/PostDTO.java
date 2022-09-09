@@ -7,6 +7,6 @@ public class PostDTO {
     private String title;
     private String description;
     private String image;
-    private Long user_id;
+    private Long admin_id;
 
 }
