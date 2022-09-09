@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -33,33 +35,42 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postDTO.getTitle());
         post.setImage(postDTO.getImage());
         post.setDescription(postDTO.getDescription());
-        post.setSlug(makeSlug(post.getTitle(),id));
+        post.setSlug(makeSlug(post.getTitle(), id));
         post.setUser(user);
         return responseUtil.Okay(postRepo.save(post));
     }
 
     @Override
     public String makeSlug(String title, String id) {
-        String slug = title.replaceAll("\\s","-");
-        return (slug + id.substring(0,8)).toLowerCase(Locale.ENGLISH);
+        String slug = title.replaceAll("\\s", "-");
+        return (slug + id.substring(0, 8)).toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public ResponseEntity<APIResponse> getPost(String id){
-        if (postRepo.findById(id).isEmpty()){
+    public ResponseEntity<APIResponse> getPost(String id) {
+        if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {
-            return  responseUtil.Okay(postRepo.findById(id).get());
+            return responseUtil.Okay(postRepo.findById(id).get());
         }
     }
 
     @Override
     public ResponseEntity<APIResponse> deletePost(String id) {
-        if (postRepo.findById(id).isEmpty()){
+        if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {
             postRepo.deleteById(id);
             return responseUtil.Deleted();
         }
+    }
+
+    @Override
+    public ResponseEntity<APIResponse> searchPost(String keyword) {
+        List<Post> searchList = new ArrayList<>();
+
+        searchList = postRepo.findAllByTitleContainingIgnoreCase(keyword);
+        System.out.println(searchList);
+        return responseUtil.Okay(searchList);
     }
 }

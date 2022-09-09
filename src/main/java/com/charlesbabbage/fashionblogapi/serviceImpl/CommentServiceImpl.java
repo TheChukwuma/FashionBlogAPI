@@ -15,6 +15,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 @Service
 @AllArgsConstructor
@@ -31,6 +35,9 @@ public class CommentServiceImpl implements CommentService {
         String id = UUID.getUniqueId();
         Post post = postRepo.findById(commentDTO.getPost_id()).get();
         User user = userRepo.findById(commentDTO.getUser_id()).get();
+//        if (!Objects.equals(post.getUser().getId(),user.getId())){
+//            throw new RuntimeException();
+//        }
         Comment comment = new Comment();
         comment.setId(id);
         comment.setComment(commentDTO.getComment());
@@ -42,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseEntity<APIResponse> getComment(String id) {
         if (commentRepo.findById(id).isEmpty()){
-            return responseUtil.NotFound("Comment bot found");
+            return responseUtil.NotFound("Comment not found");
         }
         return responseUtil.Okay(commentRepo.findById(id).get());  }
 
@@ -64,4 +71,12 @@ public class CommentServiceImpl implements CommentService {
         commentRepo.deleteById(id);
         return responseUtil.Deleted();
     }
+
+    @Override
+    public ResponseEntity<APIResponse> searchComment(String keyword) {
+        List<Comment> searchList = new ArrayList<>();
+        searchList = commentRepo.findAllByCommentContainingIgnoreCase(keyword);
+        return responseUtil.Okay(searchList);
+    }
+
 }

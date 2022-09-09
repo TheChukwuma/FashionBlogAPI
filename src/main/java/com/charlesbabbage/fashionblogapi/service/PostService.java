@@ -13,4 +13,6 @@ public interface PostService {
     ResponseEntity<APIResponse> getPost(String id);
 
     ResponseEntity<APIResponse> deletePost(String id);
+
+    ResponseEntity<APIResponse> searchPost(String keyword);
 }

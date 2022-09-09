@@ -13,4 +13,6 @@ public interface CommentService {
     ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, String id);
 
     ResponseEntity<APIResponse> deleteComment(String id);
+
+    ResponseEntity<APIResponse> searchComment(String keyword);
 }
