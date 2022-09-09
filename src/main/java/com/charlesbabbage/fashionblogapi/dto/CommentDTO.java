@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class CommentDTO {
-    private String id;
+    private Long id;
     private String comment;
-    private String post_id;
-    private String user_id;
+    private Long post_id;
+    private Long user_id;
 }

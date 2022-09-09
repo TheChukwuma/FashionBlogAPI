@@ -28,7 +28,7 @@ public class LikeServiceImpl implements LikeService {
 
 
     @Override
-    public ResponseEntity<APIResponse> likeAPost(String user_id, String post_id) {
+    public ResponseEntity<APIResponse> likeAPost(Long user_id, Long post_id) {
         Like like = new Like();
         User user = userRepo.findById(user_id).get();
         if (postRepo.findById(post_id).isEmpty()){
@@ -38,9 +38,8 @@ public class LikeServiceImpl implements LikeService {
         like.setPost(post);
         like.setUser(user);
         if (getLikeOfPost(user_id, post_id) == null){
-            String id = UUID.getUniqueId();
             like.setIsLiked(true);
-            like.setId(id);
+
             return responseUtil.Okay(likeRepo.save(like));
         }else {
             return unlikePost(user_id, post_id );
@@ -48,7 +47,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> likeAComment(String user_id, String comment_id) {
+    public ResponseEntity<APIResponse> likeAComment(Long user_id, Long comment_id) {
         Like commentLike = new Like();
         User user = userRepo.findById(user_id).get();
         if (commentRepo.findById(comment_id).isEmpty()){
@@ -58,9 +57,7 @@ public class LikeServiceImpl implements LikeService {
         if (getLikeOfComment(user_id,comment_id) == null){
             commentLike.setComment(comment);
             commentLike.setUser(user);
-            String id = UUID.getUniqueId();
             commentLike.setIsLiked(true);
-            commentLike.setId(id);
             System.out.println("hello!");
             return responseUtil.Okay(likeRepo.save(commentLike));
         }else {
@@ -69,24 +66,24 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> unlikePost(String user_id, String post_id){
+    public ResponseEntity<APIResponse> unlikePost(Long user_id, Long post_id){
         likeRepo.deleteByUserIdAndPostId(user_id, post_id);
         return responseUtil.AlreadyLiked();
     }
     @Override
-    public ResponseEntity<APIResponse> unlikeComment(String user_id, String comment_id){
+    public ResponseEntity<APIResponse> unlikeComment(Long user_id, Long comment_id){
         System.out.println("how are you!");
         likeRepo.deleteByUserIdAndCommentId(user_id, comment_id);
         return responseUtil.AlreadyLiked();
     }
 
     @Override
-    public Like getLikeOfPost(String user_id, String post_id){
+    public Like getLikeOfPost(Long user_id, Long post_id){
         return likeRepo.getByUserIdAndPostId(user_id, post_id);
     }
 
     @Override
-    public Like getLikeOfComment(String user_id, String comment_id){
+    public Like getLikeOfComment(Long user_id, Long comment_id){
         return likeRepo.getByUserIdAndCommentId(user_id, comment_id);
     }
 

@@ -24,18 +24,18 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<APIResponse> getPost(@PathVariable("id") String id){
+    public ResponseEntity<APIResponse> getPost(@PathVariable("id") Long id){
         return postService.getPost(id);
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<APIResponse> deletePost(@PathVariable("id") String id){
+    public ResponseEntity<APIResponse> deletePost(@PathVariable("id") Long id){
         return postService.deletePost(id);
     }
 
 
     @PostMapping("/posts/likes/{user_id}/{id}")
-    public ResponseEntity<APIResponse> likePost(@PathVariable("user_id") String user_id, @PathVariable("id") String post_id){
+    public ResponseEntity<APIResponse> likePost(@PathVariable("user_id") Long user_id, @PathVariable("id") Long post_id){
         return likeService.likeAPost(user_id, post_id);
     }
 

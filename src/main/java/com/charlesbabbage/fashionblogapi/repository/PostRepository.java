@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post, String> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
 //    @Query(value = "SELECT * FROM post p WHERE p.title LIKE ? ", nativeQuery = true )
 //    List<Post> findAllByTitle(String keyword);

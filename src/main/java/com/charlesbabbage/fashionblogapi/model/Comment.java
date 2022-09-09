@@ -25,7 +25,9 @@ import java.util.Objects;
 public class Comment {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String comment;
 
     @CreationTimestamp

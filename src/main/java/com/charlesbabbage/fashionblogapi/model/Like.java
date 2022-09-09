@@ -22,7 +22,8 @@ import java.util.Objects;
 public class Like {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Boolean isLiked;
 

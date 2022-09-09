@@ -23,7 +23,8 @@ import java.util.Objects;
 public class User {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)

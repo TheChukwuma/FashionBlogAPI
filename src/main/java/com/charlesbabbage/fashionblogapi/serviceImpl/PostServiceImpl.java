@@ -30,24 +30,23 @@ public class PostServiceImpl implements PostService {
     public ResponseEntity<APIResponse> uploadPost(PostDTO postDTO) {
         Post post = new Post();
         User user = userRepo.findById(postDTO.getUser_id()).get();
-        String id = UUID.getUniqueId();
-        post.setId(id);
+
         post.setTitle(postDTO.getTitle());
         post.setImage(postDTO.getImage());
         post.setDescription(postDTO.getDescription());
-        post.setSlug(makeSlug(post.getTitle(), id));
+        post.setSlug(makeSlug(post.getTitle(), postDTO.getUser_id()));
         post.setUser(user);
         return responseUtil.Okay(postRepo.save(post));
     }
 
     @Override
-    public String makeSlug(String title, String id) {
+    public String makeSlug(String title, Long id) {
         String slug = title.replaceAll("\\s", "-");
-        return (slug + id.substring(0, 8)).toLowerCase(Locale.ENGLISH);
+        return (slug + id).toLowerCase(Locale.ENGLISH);
     }
 
     @Override
-    public ResponseEntity<APIResponse> getPost(String id) {
+    public ResponseEntity<APIResponse> getPost(Long id) {
         if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {
@@ -56,7 +55,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> deletePost(String id) {
+    public ResponseEntity<APIResponse> deletePost(Long id) {
         if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {

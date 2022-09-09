@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
         else {
         User user = new User();
         String hashedPassword = HashPassword.generateStrongPasswordHash(userDTO.getPassword());
-        user.setId( UUID.getUniqueId());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setUsername(userDTO.getUsername().toLowerCase());
@@ -64,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> getUser(String user_id) {
+    public ResponseEntity<APIResponse> getUser(Long user_id) {
         if(userRepo.findById(user_id).isEmpty()){
             return responseUtil.NotFound("USER NOT FOUND");
         }return responseUtil.Okay(userRepo.findById(user_id).get());

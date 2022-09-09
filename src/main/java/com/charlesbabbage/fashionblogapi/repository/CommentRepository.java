@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, String> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 //    @Query(value = "SELECT * FROM comment c WHERE c.comment LIKE '%?%'", nativeQuery = true)
 //    List<Comment> findAllByComment(String keyword);

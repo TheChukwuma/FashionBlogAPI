@@ -8,11 +8,11 @@ public interface CommentService {
 
     ResponseEntity<APIResponse> createComment(CommentDTO commentDTO);
 
-    ResponseEntity<APIResponse> getComment(String id);
+    ResponseEntity<APIResponse> getComment(Long id);
 
-    ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, String id);
+    ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, Long id);
 
-    ResponseEntity<APIResponse> deleteComment(String id);
+    ResponseEntity<APIResponse> deleteComment(Long id);
 
     ResponseEntity<APIResponse> searchComment(String keyword);
 }

@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 
 @Transactional
-public interface LikeRepository extends JpaRepository<Like, String> {
+public interface LikeRepository extends JpaRepository<Like, Long> {
 
-    void deleteByUserIdAndCommentId(String user_id, String comment_id);
+    void deleteByUserIdAndCommentId(Long user_id, Long comment_id);
 
-    Like getByUserIdAndPostId(String user_id, String post_id);
+    Like getByUserIdAndPostId(Long user_id, Long post_id);
 
-    Like getByUserIdAndCommentId(String user_id, String comment_id);
+    Like getByUserIdAndCommentId(Long user_id, Long comment_id);
 
-    void deleteByUserIdAndPostId(String user_id, String post_id);
+    void deleteByUserIdAndPostId(Long user_id, Long post_id);
 
 }

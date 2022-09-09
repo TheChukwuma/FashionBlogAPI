@@ -22,14 +22,10 @@ public class AuthController {
 
     private final UserService userService;
 
-    private final PostService postService;
 
-    private final CommentService commentService;
-
-    private final LikeService likeService;
 
     @PostMapping("/account/register")
-    public ResponseEntity<APIResponse> register(@RequestBody UserDTO userDTO, HttpSession session) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public ResponseEntity<APIResponse> register(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return userService.register(userDTO);
     }
 

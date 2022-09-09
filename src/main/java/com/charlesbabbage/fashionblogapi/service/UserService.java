@@ -14,5 +14,5 @@ public interface UserService {
     ResponseEntity<APIResponse> login(String username, String password) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
 
-    ResponseEntity<APIResponse> getUser(String user_id);
+    ResponseEntity<APIResponse> getUser(Long user_id);
 }

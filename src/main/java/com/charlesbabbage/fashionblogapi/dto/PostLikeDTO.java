@@ -12,9 +12,9 @@ import lombok.Setter;
 public class PostLikeDTO {
 
     private Boolean isLiked = false;
-    private String user_id;
-    private String post_id;
-    private String comment_id;
+    private Long user_id;
+    private Long post_id;
+    private Long comment_id;
 
 
 

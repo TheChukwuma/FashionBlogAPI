@@ -8,11 +8,11 @@ public interface PostService {
     public ResponseEntity<APIResponse> uploadPost(PostDTO postDTO);
 
 
-    String makeSlug(String title, String id);
+    String makeSlug(String title, Long id);
 
-    ResponseEntity<APIResponse> getPost(String id);
+    ResponseEntity<APIResponse> getPost(Long id);
 
-    ResponseEntity<APIResponse> deletePost(String id);
+    ResponseEntity<APIResponse> deletePost(Long id);
 
     ResponseEntity<APIResponse> searchPost(String keyword);
 }

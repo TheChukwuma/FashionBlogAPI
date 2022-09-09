@@ -32,14 +32,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseEntity<APIResponse> createComment(CommentDTO commentDTO) {
-        String id = UUID.getUniqueId();
+
         Post post = postRepo.findById(commentDTO.getPost_id()).get();
         User user = userRepo.findById(commentDTO.getUser_id()).get();
 //        if (!Objects.equals(post.getUser().getId(),user.getId())){
 //            throw new RuntimeException();
 //        }
         Comment comment = new Comment();
-        comment.setId(id);
         comment.setComment(commentDTO.getComment());
         comment.setPost(post);
         comment.setUser(user);
@@ -47,14 +46,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> getComment(String id) {
+    public ResponseEntity<APIResponse> getComment(Long id) {
         if (commentRepo.findById(id).isEmpty()){
             return responseUtil.NotFound("Comment not found");
         }
         return responseUtil.Okay(commentRepo.findById(id).get());  }
 
     @Override
-    public ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, String id) {
+    public ResponseEntity<APIResponse> editComment(CommentDTO commentDTO, Long id) {
         if (commentRepo.findById(id).isEmpty()){
             return responseUtil.NotFound("Comment not found");
         }
@@ -64,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> deleteComment(String id) {
+    public ResponseEntity<APIResponse> deleteComment(Long id) {
         if (commentRepo.findById(id).isEmpty()){
             return responseUtil.NotFound("Comment not found");
         }

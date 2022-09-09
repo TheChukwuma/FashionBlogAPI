@@ -14,7 +14,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/account/profile/{id}")
-    public ResponseEntity<APIResponse> getUser(@PathVariable("id") String user_id){
+    public ResponseEntity<APIResponse> getUser(@PathVariable("id") Long user_id){
         return userService.getUser(user_id);
     }
 
