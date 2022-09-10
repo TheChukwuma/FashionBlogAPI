@@ -7,5 +7,6 @@ public class CommentDTO {
     private Long id;
     private String comment;
     private Long post_id;
-    private Long user_id;
+    private Long user_id = null;
+    private Long admin_id = null;
 }

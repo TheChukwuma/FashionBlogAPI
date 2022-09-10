@@ -1,23 +1,23 @@
 package com.charlesbabbage.fashionblogapi.serviceImpl;
 
 import com.charlesbabbage.fashionblogapi.dto.CommentDTO;
+import com.charlesbabbage.fashionblogapi.model.Admin;
 import com.charlesbabbage.fashionblogapi.model.Comment;
 import com.charlesbabbage.fashionblogapi.model.Post;
 import com.charlesbabbage.fashionblogapi.model.User;
 import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
+import com.charlesbabbage.fashionblogapi.repository.AdminRepository;
 import com.charlesbabbage.fashionblogapi.repository.CommentRepository;
 import com.charlesbabbage.fashionblogapi.repository.PostRepository;
 import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.CommentService;
 import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
-import com.charlesbabbage.fashionblogapi.utils.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -26,22 +26,30 @@ public class CommentServiceImpl implements CommentService {
 
     UserRepository userRepo;
     CommentRepository commentRepo;
+
+    AdminRepository adminRepo;
     PostRepository postRepo;
 
     ResponseUtil responseUtil;
 
     @Override
     public ResponseEntity<APIResponse> createComment(CommentDTO commentDTO) {
-
+        Admin admin;
+        User user;
+        Comment comment = new Comment();
         Post post = postRepo.findById(commentDTO.getPost_id()).get();
-        User user = userRepo.findById(commentDTO.getUser_id()).get();
+        if (userRepo.findById(commentDTO.getUser_id()).isEmpty()){
+            admin = adminRepo.findById(commentDTO.getAdmin_id()).get();
+            comment.setAdmin(admin);
+        }else {
+            user = userRepo.findById(commentDTO.getUser_id()).get();
+            comment.setUser(user);
+        }
 //        if (!Objects.equals(post.getUser().getId(),user.getId())){
 //            throw new RuntimeException();
 //        }
-        Comment comment = new Comment();
         comment.setComment(commentDTO.getComment());
         comment.setPost(post);
-        comment.setUser(user);
         return responseUtil.Okay(commentRepo.save(comment));
     }
 
