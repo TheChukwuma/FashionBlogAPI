@@ -23,11 +23,7 @@ import java.security.spec.InvalidKeySpecException;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepo;
-
-    private final PostRepository postRepo;
-
     private final ResponseUtil responseUtil;
 
     @Override
@@ -36,7 +32,8 @@ public class UserServiceImpl implements UserService {
         User existingEmail = userRepo.findByEmail(userDTO.getEmail());
         if (existingUsername != null ){
             return responseUtil.AlreadyExist(String.format("%s already exist",userDTO.getUsername()));
-        }else if (existingEmail != null) {
+        }
+        else if (existingEmail != null) {
             return responseUtil.AlreadyExist(String.format("%s already exist",userDTO.getEmail()));
         }
         else {
@@ -47,6 +44,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername().toLowerCase());
         user.setEmail(userDTO.getEmail().toLowerCase());
         user.setPassword(hashedPassword);
+        user.setRole(userDTO.getRole());
         return responseUtil.Okay(userRepo.save(user));
         }
     }

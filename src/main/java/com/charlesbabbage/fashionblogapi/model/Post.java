@@ -20,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 
 @Entity
-
+@Table(name = "posts")
 public class Post {
 
     @Id

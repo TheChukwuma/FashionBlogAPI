@@ -22,6 +22,7 @@ import java.util.Objects;
 
 
 @Entity
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -43,6 +44,7 @@ public class Comment {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "comment")
+    @ToString.Exclude
     private List<Like> likes = new ArrayList<>();
 
     @JsonBackReference

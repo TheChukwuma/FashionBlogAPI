@@ -36,6 +36,8 @@ public class ResponseUtil<T> {
         return new ResponseEntity<>(new APIResponse<>("ALREADY LIKED, SO, NOW UNLIKED", true, null), HttpStatus.CONFLICT);
     }
 
-
+    public ResponseEntity<APIResponse> NotAnAdmin(){
+        return new ResponseEntity<>(new APIResponse<>("CANNOT CREATE OR DELETE A POST, NOT AN ADMIN", true, null), HttpStatus.BAD_REQUEST);
+    }
 
 }

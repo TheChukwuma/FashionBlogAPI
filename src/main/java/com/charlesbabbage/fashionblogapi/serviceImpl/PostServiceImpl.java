@@ -1,6 +1,7 @@
 package com.charlesbabbage.fashionblogapi.serviceImpl;
 
 import com.charlesbabbage.fashionblogapi.dto.PostDTO;
+import com.charlesbabbage.fashionblogapi.enums.UserRole;
 import com.charlesbabbage.fashionblogapi.model.Post;
 import com.charlesbabbage.fashionblogapi.model.User;
 import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
@@ -8,7 +9,6 @@ import com.charlesbabbage.fashionblogapi.repository.PostRepository;
 import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.PostService;
 import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
-import com.charlesbabbage.fashionblogapi.utils.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponseEntity<APIResponse> uploadPost(PostDTO postDTO) {
+
         Post post = new Post();
         User user = userRepo.findById(postDTO.getUser_id()).get();
-
+        if (user.getRole().equals(UserRole.USER.name())){
+            return responseUtil.NotAnAdmin();
+        }
         post.setTitle(postDTO.getTitle());
         post.setImage(postDTO.getImage());
         post.setDescription(postDTO.getDescription());
@@ -55,7 +58,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<APIResponse> deletePost(Long id) {
+    public ResponseEntity<APIResponse> deletePost(Long user_id, Long id) {
+        User user = userRepo.findById(user_id).get();
+        if (user.getRole().equals(UserRole.USER.name())){
+            return responseUtil.NotAnAdmin();
+        }
         if (postRepo.findById(id).isEmpty()) {
             return responseUtil.NotFound("Post does not exist");
         } else {
