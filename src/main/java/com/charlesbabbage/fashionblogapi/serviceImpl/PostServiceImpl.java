@@ -59,6 +59,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponseEntity<APIResponse> deletePost(Long user_id, Long id) {
+        if (userRepo.findById(user_id).isEmpty()){
+            return responseUtil.NotFound("ADMIN, NOT FOUND!");
+        }
         User user = userRepo.findById(user_id).get();
         if (user.getRole().equals(UserRole.USER.name())){
             return responseUtil.NotAnAdmin();
@@ -73,9 +76,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponseEntity<APIResponse> searchPost(String keyword) {
-        List<Post> searchList = new ArrayList<>();
+        if (postRepo.findAllByTitleContainingIgnoreCase(keyword).isEmpty()){
+            return responseUtil.Okay("NO POST FOUND");
+        }
+        List<Post> searchList = postRepo.findAllByTitleContainingIgnoreCase(keyword);
 
-        searchList = postRepo.findAllByTitleContainingIgnoreCase(keyword);
         System.out.println(searchList);
         return responseUtil.Okay(searchList);
     }

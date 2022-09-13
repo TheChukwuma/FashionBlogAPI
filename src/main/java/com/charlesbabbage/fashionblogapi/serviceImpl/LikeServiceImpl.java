@@ -54,11 +54,11 @@ public class LikeServiceImpl implements LikeService {
             return responseUtil.NotFound("Comment Not Found!");
         }
         Comment comment = commentRepo.findById(comment_id).get();
+        commentLike.setComment(comment);
+        commentLike.setUser(user);
         if (getLikeOfComment(user_id,comment_id) == null){
-            commentLike.setComment(comment);
-            commentLike.setUser(user);
             commentLike.setIsLiked(true);
-            System.out.println("hello!");
+
             return responseUtil.Okay(likeRepo.save(commentLike));
         }else {
             return unlikeComment(user_id, comment_id );
@@ -72,7 +72,7 @@ public class LikeServiceImpl implements LikeService {
     }
     @Override
     public ResponseEntity<APIResponse> unlikeComment(Long user_id, Long comment_id){
-        System.out.println("how are you!");
+
         likeRepo.deleteByUserIdAndCommentId(user_id, comment_id);
         return responseUtil.AlreadyLiked();
     }

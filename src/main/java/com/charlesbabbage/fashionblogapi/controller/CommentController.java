@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1")
 public class CommentController {
-
     private final CommentService commentService;
-
     private final LikeService likeService;
 
     @PostMapping("/posts/comments")
@@ -23,7 +21,7 @@ public class CommentController {
     }
 
     @GetMapping("/posts/comments/{id}")
-    public ResponseEntity<APIResponse> getComment(@PathVariable Long id){
+    public ResponseEntity<APIResponse> fetchComment(@PathVariable Long id){
         return commentService.getComment(id);
     }
 

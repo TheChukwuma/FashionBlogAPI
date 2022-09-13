@@ -10,7 +10,6 @@ import com.charlesbabbage.fashionblogapi.repository.PostRepository;
 import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.CommentService;
 import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
-import com.charlesbabbage.fashionblogapi.utils.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseEntity<APIResponse> createComment(CommentDTO commentDTO) {
-
+        if(postRepo.findById(commentDTO.getPost_id()).isEmpty()){
+            return responseUtil.NotFound("POST, NOT FOUND!");
+        }
         Post post = postRepo.findById(commentDTO.getPost_id()).get();
         User user = userRepo.findById(commentDTO.getUser_id()).get();
 //        if (!Objects.equals(post.getUser().getId(),user.getId())){
@@ -73,8 +74,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseEntity<APIResponse> searchComment(String keyword) {
-        List<Comment> searchList = new ArrayList<>();
-        searchList = commentRepo.findAllByCommentContainingIgnoreCase(keyword);
+        if (commentRepo.findAllByCommentContainingIgnoreCase(keyword).isEmpty()){
+            return responseUtil.Okay("NO POST FOUND");
+        }
+        List<Comment> searchList = commentRepo.findAllByCommentContainingIgnoreCase(keyword);
+
         return responseUtil.Okay(searchList);
     }
 

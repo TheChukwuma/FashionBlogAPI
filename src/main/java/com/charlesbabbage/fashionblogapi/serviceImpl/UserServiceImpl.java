@@ -2,18 +2,14 @@ package com.charlesbabbage.fashionblogapi.serviceImpl;
 
 import com.charlesbabbage.fashionblogapi.dto.UserDTO;
 import com.charlesbabbage.fashionblogapi.enums.LoginEnum;
-import com.charlesbabbage.fashionblogapi.exception.ApiResponseException;
 import com.charlesbabbage.fashionblogapi.model.User;
 import com.charlesbabbage.fashionblogapi.pojos.APIResponse;
-import com.charlesbabbage.fashionblogapi.repository.PostRepository;
 import com.charlesbabbage.fashionblogapi.repository.UserRepository;
 import com.charlesbabbage.fashionblogapi.service.UserService;
 import com.charlesbabbage.fashionblogapi.utils.HashPassword;
 import com.charlesbabbage.fashionblogapi.utils.ResponseUtil;
-import com.charlesbabbage.fashionblogapi.utils.UUID;
 import com.charlesbabbage.fashionblogapi.utils.ValidatePassword;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +21,8 @@ import java.security.spec.InvalidKeySpecException;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepo;
     private final ResponseUtil responseUtil;
+
+
 
     @Override
     public ResponseEntity<APIResponse> register(UserDTO userDTO) throws NoSuchAlgorithmException, InvalidKeySpecException {
